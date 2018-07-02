@@ -14,7 +14,7 @@ function goodreadService(){
                     } else {
                         resolve(result.GoodreadsResponse.book);
                     }
-                })
+                });
             })
             .catch((err)=>{
                 reject(err);
