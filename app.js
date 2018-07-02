@@ -8,17 +8,17 @@ const bookRouter = require('./src/routes/bookRouter');
 const bookModel = require('./src/models/bookModel');
 const userModel = require('./src/models/userModel');
 const authRouter = require('./src/routes/authRouter');
+const contactRouter = require('./src/routes/contactRouter');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const nav = [
     { link: '/book', title: 'Book'},
     { link: '/author', title: 'Author'},
+    { link: '/contact', title: 'Contact Us'},
     { link: '/auth/login', title: 'SignIn'},
     { link: '/auth/logout', title: 'Logout'}
 ];
-
-
 
 app.use(express.static(path.join(__dirname,'/public')));
 app.use('/book/css', express.static(path.join(__dirname,'/public')));
@@ -34,6 +34,7 @@ require('./src/strategies/passport')(app);
 
 app.use('/book', bookRouter(bookModel, nav));
 app.use('/auth', authRouter(userModel, nav));
+app.use('/contact', contactRouter(nav));
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
