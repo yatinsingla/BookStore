@@ -18,7 +18,7 @@ const router = function(nav){
             service : 'Gmail',
             auth : {
                 user: 'yatin.singla001@gmail.com',
-                pass: 'krishna@108'
+                pass: 'PASSWORDHERE'
             }
         })
 
