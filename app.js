@@ -3,6 +3,7 @@ const path = require('path');
 const bodyparser = require('body-parser');
 const cookieparser = require('cookie-parser');
 const expressSession = require('express-session');
+const validator = require('express-validator');
 
 const bookRouter = require('./src/routes/bookRouter');
 const bookModel = require('./src/models/bookModel');
@@ -15,9 +16,7 @@ const port = process.env.PORT || 3000;
 const nav = [
     { link: '/book', title: 'Book'},
     { link: '/author', title: 'Author'},
-    { link: '/contact', title: 'Contact Us'},
-    { link: '/auth/login', title: 'SignIn'},
-    { link: '/auth/logout', title: 'Logout'}
+    { link: '/contact', title: 'Contact Us'}
 ];
 
 app.use(express.static(path.join(__dirname,'/public')));
@@ -28,7 +27,8 @@ app.use('/js', express.static(path.join(__dirname,'/node_modules/boostrap/dist/j
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(cookieparser());
-app.use(expressSession({ secret: 'bookstore', resave: false, saveUninitialized: true }));
+app.use(expressSession({ secret: 'bookstore', resave: true, saveUninitialized: true }));
+app.use(validator());
 
 require('./src/strategies/passport')(app);
 

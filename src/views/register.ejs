@@ -1,0 +1,29 @@
+<% include ./layout.ejs %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12"> 
+      <div class="panel">
+        <div class="panel-body">
+          <!--/stories-->
+          <div class="container row col-md-8">    
+            <br>
+            <h1>Register</h1><hr>
+            <% if(errors.length>0) { %>
+                <% for(let i=0;i<errors.length;i++){ %>
+                    <div class="alert alert-danger"><%=errors[i].msg%></div>
+                <% } %>
+            <% } %>
+            <form class="form-group" action="/auth/register" method="post" name="registerform">
+                <label>Username:</label> <input type="text"  name="username" id="username"><br><br>
+                <label>Password:</label> <input type="text" name="password" id="password"><br><br>
+                <input class="btn btn-primary" type="submit" value="submit" >
+            </form>
+          </div>
+          <hr>
+        </div>
+      </div>                                              
+   	</div><!--/col-12-->
+  </div>
+</div>
+
+<% include ./footer.ejs %>

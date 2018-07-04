@@ -7,7 +7,7 @@ const router = function(nav){
     contactRouter.route('/')
     .get((req, res)=>{
         res.render('contact', {
-            nav, 
+            nav,
             title: 'BookStore'
         });
     })
