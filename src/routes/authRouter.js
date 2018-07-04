@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const {check} = require('express-validator/check');
+const bcrypt = require('bcryptjs');
 
 const db = mongoose.connect('mongodb://localhost/bookAPI');
 
@@ -24,6 +25,8 @@ const router = function(userModel, nav){
         const {username, password} = req.body;
         const user = new userModel({username, password});
 
+        
+        console.log(user);
         var errors = req.validationErrors();
         if (errors) {
             res.render('register',{
@@ -33,14 +36,21 @@ const router = function(userModel, nav){
             });
             console.log("errors");
         } else {
-            user.save((err)=>{
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log(user);
-                    res.redirect('/auth/login');
-                }
+            bcrypt.genSalt(10, function(err, salt) {
+                bcrypt.hash(user.password, salt, function(err, hash) {
+                    user.password = hash;
+                    //console.log('password: ' + user.password + ', username: ' + user.username);
+                    user.save((err)=>{
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log(user);
+                            res.redirect('/auth/login');
+                        }
+                    });
+                });
             });
+            
             console.log("no errors");
         }
 
