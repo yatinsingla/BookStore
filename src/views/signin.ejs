@@ -8,6 +8,9 @@
           <div class="container row">    
             <br>
             <h1>LOGIN</h1><hr>
+            <% if ( messages.length > 0 ) { %>
+              <div class="alert alert-danger"><%= messages %></div>
+              <% } %>
             <form action="/auth/login" method="post" name="signinform">
                 Username: <input name="username" id="username"><br><br>
                 Password: <input name="password" id="password"><br><br>

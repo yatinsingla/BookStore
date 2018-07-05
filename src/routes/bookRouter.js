@@ -10,12 +10,13 @@ const router = function(bookModel, nav){
     bookRouter.route('/')
     .get((req, res)=>{
         console.log(req.user);
-        if(req.user) {
+        if(req.isAuthenticated()) {
             bookModel.find(function(err, book){
                 res.render('books', {
                     nav,
                     title: 'Books',
-                    book
+                    book,
+                    user: req.user
                 })
             })   
         } else {

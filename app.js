@@ -4,6 +4,7 @@ const bodyparser = require('body-parser');
 const cookieparser = require('cookie-parser');
 const expressSession = require('express-session');
 const validator = require('express-validator');
+const flash = require('express-flash');
 
 const bookRouter = require('./src/routes/bookRouter');
 const bookModel = require('./src/models/bookModel');
@@ -29,6 +30,7 @@ app.use(bodyparser.urlencoded({extended:false}));
 app.use(cookieparser());
 app.use(expressSession({ secret: 'bookstore', resave: true, saveUninitialized: true }));
 app.use(validator());
+app.use(flash());
 
 require('./src/strategies/passport')(app);
 
@@ -39,11 +41,21 @@ app.use('/contact', contactRouter(nav));
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
+app.get('*', function(req, res, next){
+    res.locals.user = req.user || null;
+    next();
+});
+
 app.get('/', function(req, res){
-    res.render('index', {
-        nav,
-        title: 'BookStore' 
-    });
+    if (req.isAuthenticated()) {
+        res.render('index', {
+            nav,
+            title: 'BookStore',
+            user: req.user
+        });
+    } else {
+        res.redirect('/auth/login');
+    }
 }).listen(port, function(){
     console.log('You are connected to server on port: ' + port);
 });

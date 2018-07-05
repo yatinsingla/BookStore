@@ -60,12 +60,15 @@ const router = function(userModel, nav){
     .get((req, res)=>{
         res.render('signin', {
             nav, 
-            title: 'BookStore'
+            title: 'BookStore',
+            messages: req.flash("error"),
+            user: req.user
         })
     })
     .post(passport.authenticate('local', {
         successRedirect: '/book',
-        failureRedirect: '/auth/login'
+        failureRedirect: '/auth/login',
+        failureFlash: true
     }))
 
     authRouter.route('/logout')

@@ -32,17 +32,21 @@
           <a href="<%=nav[i].link %>"><%=nav[i].title %></a>
         </li>
         <% } %>
+        <% if(!user) { %>
         <li>
           <a href="<%='/auth/register'%>">Register</a>
         </li>
         <li>
           <a href="<%='/auth/login'%>">LogIn</a>
         </li>
+        <% } %>
       </ul>
       <ul class="nav navbar-right navbar-nav">
+        <% if(user){ %>
         <li>
           <a href="<%='/auth/logout'%>">Logout</a>
         </li>
+        <% } %>
       </ul>
     </nav>
   </div>
